@@ -1,0 +1,39 @@
+;oh god time for a rewrite
+
+
+jmp start
+;;Data
+jmp krnl_task_done
+jmp krnl_task_print
+jmp krnl_task_terminate
+jmp krnl_core_start
+jmp krnl_core_dump
+memaddrshell .dw $00, $36
+shell .db 'shell'
+start:
+
+ld IX, 0
+ld IY, (shell)
+call krnl_core_start
+
+
+krnl_task_done:
+	pop d
+	ld ($6BE0), d
+	push AF
+	push BC
+	push DE
+	push HL
+	push IX
+	push IY
+	call task_switch
+	pop IY
+	pop IX
+	pop HL
+	pop DE
+	pop BC
+	pop AF
+ret
+
+task_switch:
+	ld 
