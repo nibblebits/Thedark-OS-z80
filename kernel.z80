@@ -1,5 +1,7 @@
 ;oh god time for a rewrite
 
+;Todo finish process table
+
 
 jmp start
 ;;Data
