@@ -20,8 +20,6 @@ call krnl_core_start
 
 
 krnl_task_done:
-	pop d
-	ld ($6BE0), d
 	push AF
 	push BC
 	push DE
@@ -38,4 +36,61 @@ krnl_task_done:
 ret
 
 task_switch:
-	ld 
+	ld a, ($6BD0)
+	cp $6
+	jr set1
+	tloop:
+	inc ($6BD0)
+	ld a, ($6BD0)
+	cp $1
+	jr swtch_tsk_2
+	cp $2
+	jr swtch_tsk_3
+	cp $3
+	jr swtch_tsk_4
+	cp $4
+	jr swtch_tsk_5
+	cp $5
+	jr swtch_tsk_1
+	call krnl_err_ptble
+	
+swtch_tsk_1:
+	ld A, ($6AD0)
+	inc A
+	cp $00
+	jr task_switch
+	jp ($6AD0)
+	
+swtch_tsk_2:
+	ld A, ($6AD3)
+	inc A
+	cp $00
+	jr task_switch
+	jp ($6AD3)
+	
+swtch_tsk_3:
+	ld A, ($6AD6)
+	inc A
+	cp $00
+	jr task_switch
+	jp ($6AD6)
+
+swtch_tsk_4:
+	ld A, ($6AD9)
+	inc A
+	cp $00
+	jr task_switch
+	jp ($6AD9)
+swtch_tsk_5:
+	ld A, ($6ADB)
+	inc A
+	cp $00
+	jr task_switch
+	jp ($6ADB)
+jmp task_switch
+
+set1:
+	ld ($6BD0), $1
+jp tloop
+
+
