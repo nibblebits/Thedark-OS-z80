@@ -16,7 +16,7 @@ start:
 
 ld IX, 0
 ld IY, (shell)
-call krnl_core_start
+call krnl_core_start ; This is not declared?
 
 
 krnl_task_done:
